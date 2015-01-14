@@ -24,8 +24,8 @@ public class NameProvider {
 
     public NameProvider(Config config) {
         PlayersConfig playersConfig = config.getPlayers();
-        initNames(playerNames, playersConfig == null ? null : playersConfig.getNames());
-        initNames(aiNames, playersConfig == null ? null : playersConfig.getAi_names());
+        initNames(playerNames, playersConfig.getNames());
+        initNames(aiNames, playersConfig.getAi_names());
     }
 
     private void initNames(List<ReservedName> lrn, List<String> names) {

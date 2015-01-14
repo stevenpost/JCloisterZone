@@ -411,9 +411,6 @@ public class CreateGamePanel extends JPanel {
 
     private Preset[] getPresets() {
         Map<String, PresetConfig> presetCfg = client.getConfig().getPresets();
-        if (presetCfg == null) {
-            return new Preset[0];
-        }
         ArrayList<Preset> profiles = new ArrayList<>();
         for (Entry<String, PresetConfig> e : presetCfg.entrySet()) {
             profiles.add(new Preset(e.getKey(), e.getValue()));

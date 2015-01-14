@@ -183,31 +183,27 @@ public class ConfigLoader {
         model.put("screenshot_folder", config.getScreenshots().getFolder());
         model.put("screenshot_scale", config.getScreenshots().getScale());
 
-        if (config.getConfirm() != null) {
-            model.put("confirm", indent(1, yaml.dumpAs(config.getConfirm(), Tag.MAP, FlowStyle.BLOCK)));
-        }
+        model.put("confirm", indent(1, yaml.dumpAs(config.getConfirm(), Tag.MAP, FlowStyle.BLOCK)));
         PlayersConfig pc = config.getPlayers();
-        if (pc != null) {
-            if (pc.getColors() != null && !pc.getColors().isEmpty()) {
-                StringBuilder colors = new StringBuilder();
-                for (ColorConfig cfg : pc.getColors()) {
-                    colors.append("\n  - ");
-                    colors.append(yaml.dumpAs(cfg, Tag.MAP, FlowStyle.FLOW).trim());
-                }
-                model.put("colors", colors.toString());
+        if (!pc.getColors().isEmpty()) {
+            StringBuilder colors = new StringBuilder();
+            for (ColorConfig cfg : pc.getColors()) {
+                colors.append("\n  - ");
+                colors.append(yaml.dumpAs(cfg, Tag.MAP, FlowStyle.FLOW).trim());
             }
-            if (pc.getNames() != null && !pc.getNames().isEmpty()) {
-                model.put("player_names", yaml.dumpAs(pc.getNames(), Tag.SEQ, FlowStyle.FLOW).trim());
-            }
-            if (pc.getAi_names() != null && !pc.getAi_names().isEmpty()) {
-                model.put("ai_names", yaml.dumpAs(pc.getAi_names(), Tag.SEQ, FlowStyle.FLOW).trim());
-            }
+            model.put("colors", colors.toString());
+        }
+        if (pc.getNames() != null && !pc.getNames().isEmpty()) {
+            model.put("player_names", yaml.dumpAs(pc.getNames(), Tag.SEQ, FlowStyle.FLOW).trim());
+        }
+        if (pc.getAi_names() != null && !pc.getAi_names().isEmpty()) {
+            model.put("ai_names", yaml.dumpAs(pc.getAi_names(), Tag.SEQ, FlowStyle.FLOW).trim());
         }
 
         if (config.getPlugins() != null && !config.getPlugins().isEmpty()) {
             model.put("plugins", indent(1, yaml.dumpAs(config.getPlugins(), Tag.SEQ, FlowStyle.BLOCK)));
         }
-        if (config.getPresets() != null && !config.getPresets().isEmpty()) {
+        if (!config.getPresets().isEmpty()) {
             model.put("presets", indent(1, yaml.dumpAs(config.getPresets(), Tag.MAP, FlowStyle.BLOCK)));
         }
         if (config.getConnection_history() != null && !config.getConnection_history().isEmpty()) {

@@ -97,7 +97,7 @@ public class Bootstrap  {
                     try {
                         URL url = new URL(updateUrlStr);
                         final AppUpdate update = AppUpdate.fetch(url);
-                        if (update != null && (new VersionComparator()).compare(com.jcloisterzone.Application.VERSION, update.getVersion()) < 0) {
+                        if ((new VersionComparator()).compare(com.jcloisterzone.Application.VERSION, update.getVersion()) < 0) {
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
                                     client.showUpdateIsAvailable(update);
