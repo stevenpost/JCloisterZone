@@ -1,7 +1,10 @@
 package com.jcloisterzone.config;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -85,7 +88,7 @@ public class ConfigLoader {
         } else {
             logger.info("Loading configuration {}", configFile);
             try {
-                config = (Config) yaml.load(new FileInputStream(configFile));
+                config = (Config) yaml.load(new BufferedInputStream(new FileInputStream(configFile)));
             } catch (Exception ex) {
                 logger.warn("Error reading configuration.", ex);
                 if (ex instanceof ParserException) {
@@ -125,7 +128,7 @@ public class ConfigLoader {
 
     public void save(Config config) {
         File file = config.getOrigin();
-        try (PrintWriter writer = new PrintWriter(file)) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
             writer.print(fillTemplate(config));
             logger.info("Configuration saved {}", file);
         } catch (IOException e) {
